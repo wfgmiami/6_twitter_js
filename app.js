@@ -6,6 +6,7 @@ const routes = require('./routes');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
+const bodyParser = require('body-parser');
 
 const app = express();
 const logger = morgan('dev');
@@ -30,7 +31,8 @@ app.use(logger);
 
 
 app.use('/', express.static(__dirname + '/public'))
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use('/', routes);
 

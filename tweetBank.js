@@ -3,7 +3,7 @@ const _ = require('lodash');
 const data = [];
 
 function add(name, text){
-  data.push({ name: name, text: text });
+  data.push({ id: data.length, name: name, text: text });
 }
 
 function list(){
