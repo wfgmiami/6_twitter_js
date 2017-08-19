@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 const bodyParser = require('body-parser');
+const socketio = require('socket.io');
 
 const app = express();
 const logger = morgan('dev');
@@ -34,9 +35,8 @@ app.use('/', express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/', routes);
-
 const port = process.env.port || 3000;
-app.listen( port, () => console.log( `listening on port ${ port }` ));
+var server = app.listen( port, () => console.log( `listening on port ${ port }` ));
 
-
+var io = socketio.listen(server);
+app.use('/', routes(io));
